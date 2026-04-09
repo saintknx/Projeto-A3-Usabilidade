@@ -7,3 +7,4 @@ Pietro Gregorio Cordeiro - 822164917
 Ricardo Gonçalves Lima - 824145766
 Laryssa Moreira Stepanov - 824128219
 Erick Souza Bernardes - 814128618
+Guilherme Cesar de Brito - 8222247316
