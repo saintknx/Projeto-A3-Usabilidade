@@ -1,4 +1,4 @@
-# 🗺️ PokéBrasil — Pokédex Geográfica Interativa
+# PokéBrasil — Pokédex Geográfica Interativa
 
 > Explore os biomas brasileiros e descubra quais Pokémons habitam cada região do país.
 
@@ -6,12 +6,18 @@
 
 ## Integrantes
 
-Kauã dos Santos Alves Sousa - 824149388
+Kauã dos Santos Alves Sousa - 824149388 
+
 Diogo Tayjen Dagnino - 823130326
+
 Pietro Gregorio Cordeiro - 822164917
+
 Ricardo Gonçalves Lima - 824145766
+
 Laryssa Moreira Stepanov - 824128219
+
 Erick Souza Bernardes - 814128618
+
 Guilherme Cesar de Brito - 8222247316
 
 ---
@@ -41,9 +47,13 @@ API REST pública e gratuita com dados completos do universo Pokémon.
 ### PokéAPI
 
 `GET /api/v2/pokemon-habitat/` - Lista todos os habitats disponíveis
+
 `GET /api/v2/pokemon-habitat/{habitat}` - Retorna todos os Pokémons de um habitat (ex: `forest`, `grassland`)
+
 `GET /api/v2/pokemon/{id}` - Dados do Pokémon: tipos, stats, sprites, habilidades
+
 `GET /api/v2/pokemon-species/{id}` - Dados da espécie: descrição em PT-BR, lendário, habitat
+
 
 ---
 
@@ -51,7 +61,7 @@ API REST pública e gratuita com dados completos do universo Pokémon.
 
 ### Telas / Rotas
 
-`/` :**MapPage** - Mapa interativo do Brasil colorido por bioma. Pokémons aparecem como marcadores clicáveis. Sidebar com preview do Pokémon selecionado.
+`/`: **MapPage** - Mapa interativo do Brasil colorido por bioma. Pokémons aparecem como marcadores clicáveis. Sidebar com preview do Pokémon selecionado.
 
 `/bioma/:habitat`: **BiomaPage** - Grid com todos os Pokémons do habitat clicado no mapa.
 
@@ -111,7 +121,7 @@ pokebrasil/
 ├── index.html
 ├── package.json
 └── vite.config.js
-
+```
 ---
 
 ## Heurísticas
