@@ -1,0 +1,44 @@
+.error-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px;
+  text-align: center;
+}
+
+.error-icon {
+  font-size: 36px;
+}
+
+.error-text {
+  font-family: var(--body);
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 280px;
+  line-height: 1.6;
+}
+
+.error-retry {
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 700;
+  background: var(--surface2);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.error-retry:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.error-retry:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
