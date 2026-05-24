@@ -1,0 +1,170 @@
+.bioma-layout {
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── HEADER ─────────────────────────────────────────────────────────────── */
+.bioma-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.btn-voltar {
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 700;
+  background: var(--surface2);
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.btn-voltar:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.btn-voltar:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.bioma-titulo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.bioma-cor-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.bioma-titulo {
+  font-family: var(--pixel);
+  font-size: 12px;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.bioma-subtitulo {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* ─── CONTEÚDO ───────────────────────────────────────────────────────────── */
+.bioma-content {
+  flex: 1;
+  padding: 32px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Grid de cards */
+.bioma-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+/* Card */
+.bioma-poke-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.bioma-poke-card:hover,
+.bioma-poke-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px rgba(255, 215, 0, 0.12);
+  outline: none;
+}
+
+.bioma-card-img-wrap {
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  aspect-ratio: 1;
+}
+
+.bioma-card-img-wrap img {
+  width: 100%;
+  max-width: 100px;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.2s;
+}
+
+.bioma-poke-card:hover .bioma-card-img-wrap img {
+  transform: scale(1.08);
+}
+
+.bioma-card-body {
+  padding: 10px 12px;
+}
+
+.bioma-card-number {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.bioma-card-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  text-transform: capitalize;
+  margin-bottom: 6px;
+}
+
+.bioma-card-types {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.loading-types {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Estado vazio */
+.bioma-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 80px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 16px;
+}
+
+.bioma-vazio span {
+  font-size: 48px;
+}
