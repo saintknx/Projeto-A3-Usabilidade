@@ -6,21 +6,21 @@
 
 ## Integrantes
 
-| Nome | RA |
-|---|---|
-| Kauã dos Santos Alves Sousa | 824149388 |
-| Diogo Tayjen Dagnino | 823130326 |
-| Pietro Gregorio Cordeiro | 822164917 |
-| Ricardo Gonçalves Lima | 824145766 |
-| Laryssa Moreira Stepanov | 824128219 |
-| Erick Souza Bernardes | 814128618 |
-| Guilherme Cesar de Brito | 8222247316 |
+| Nome                        | RA         |
+| --------------------------- | ---------- |
+| Kauã dos Santos Alves Sousa | 824149388  |
+| Diogo Tayjen Dagnino        | 823130326  |
+| Pietro Gregorio Cordeiro    | 822164917  |
+| Ricardo Gonçalves Lima      | 824145766  |
+| Laryssa Moreira Stepanov    | 824128219  |
+| Erick Souza Bernardes       | 814128618  |
+| Guilherme Cesar de Brito    | 8222247316 |
 
 ---
 
 ## Tema e Objetivo
 
-O **PokéBrasil** é uma Pokédex com identidade geográfica: cada região brasileira é mapeado a um habitat da PokéAPI, permitindo ao usuário explorar o território nacional e descobrir Pokémons de forma interativa.
+O **PokéBrasil** é uma Pokédex com identidade geográfica: cada região brasileira é mapeada a um habitat da PokéAPI, permitindo ao usuário explorar o território nacional e descobrir Pokémons de forma interativa.
 
 O objetivo é unir cultura brasileira e universo Pokémon em uma experiência visual e educativa, navegando por um mapa real do Brasil.
 
@@ -61,19 +61,20 @@ http://localhost:5173
 
 ## Tecnologias e Bibliotecas
 
-| Tecnologia | Versão | Uso |
-|---|---|---|
-| React | 18 | Biblioteca principal de UI |
-| Vite | 8 | Bundler e servidor de desenvolvimento |
-| React Router DOM | 7 | Roteamento SPA (navegação entre páginas) |
-| React Simple Maps | 3 | Renderização do mapa SVG interativo do Brasil |
-| ESLint | 9 | Linting e qualidade de código |
+| Tecnologia        | Versão | Uso                                           |
+| ----------------- | ------ | --------------------------------------------- |
+| React             | 18     | Biblioteca principal de UI                    |
+| Vite              | 8      | Bundler e servidor de desenvolvimento         |
+| React Router DOM  | 7      | Roteamento SPA (navegação entre páginas)      |
+| React Simple Maps | 3      | Renderização do mapa SVG interativo do Brasil |
+| ESLint            | 9      | Linting e qualidade de código                 |
 
 ---
 
 ## APIs Utilizadas
 
 ### 1. PokéAPI
+
 API REST pública e gratuita com dados completos do universo Pokémon.
 
 - [https://pokeapi.co](https://pokeapi.co)
@@ -81,6 +82,7 @@ API REST pública e gratuita com dados completos do universo Pokémon.
 - Sem necessidade de autenticação
 
 ### 2. MyMemory Translation API
+
 API de tradução automática usada como fallback quando a descrição do Pokémon não está disponível em PT-BR na PokéAPI.
 
 - [https://mymemory.translated.net](https://mymemory.translated.net)
@@ -93,16 +95,16 @@ API de tradução automática usada como fallback quando a descrição do Pokém
 
 ### PokéAPI
 
-| Endpoint | Usado em | O que retorna |
-|---|---|---|
-| `GET /api/v2/pokemon/{id}` | `usePokemon` | Tipos, stats, sprites e habilidades |
-| `GET /api/v2/pokemon-species/{id}` | `usePokemonSpecies` | Descrição em PT-BR, lendário, habitat |
-| `GET /api/v2/pokemon-habitat/{id}` | `useHabitatPokemon`, `useMapMarkers` | Lista de Pokémons de um habitat |
+| Endpoint                           | Usado em                             | O que retorna                         |
+| ---------------------------------- | ------------------------------------ | ------------------------------------- |
+| `GET /api/v2/pokemon/{id}`         | `usePokemon`                         | Tipos, stats, sprites e habilidades   |
+| `GET /api/v2/pokemon-species/{id}` | `usePokemonSpecies`                  | Descrição em PT-BR, lendário, habitat |
+| `GET /api/v2/pokemon-habitat/{id}` | `useHabitatPokemon`, `useMapMarkers` | Lista de Pokémons de um habitat       |
 
 ### MyMemory
 
-| Endpoint | Usado em | O que retorna |
-|---|---|---|
+| Endpoint                                | Usado em            | O que retorna              |
+| --------------------------------------- | ------------------- | -------------------------- |
 | `GET /get?q={texto}&langpair=en\|pt-br` | `usePokemonSpecies` | Texto traduzido para PT-BR |
 
 ---
@@ -173,11 +175,11 @@ src/
 
 ## Telas e Rotas
 
-| Rota | Tela | Descrição |
-|---|---|---|
-| `/` | **MapPage** | Mapa interativo do Brasil colorido por bioma. Pokémons aparecem como marcadores clicáveis. Sidebar com preview do Pokémon selecionado. |
-| `/bioma/:habitat` | **BiomaPage** | Grid com todos os Pokémons do habitat selecionado. |
-| `/pokemon/:id` | **PokemonPage** | Página completa: sprite animado, tipos, stats, habilidades, descrição em PT-BR e habitat. |
+| Rota              | Tela            | Descrição                                                                                                                              |
+| ----------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `/`               | **MapPage**     | Mapa interativo do Brasil colorido por bioma. Pokémons aparecem como marcadores clicáveis. Sidebar com preview do Pokémon selecionado. |
+| `/bioma/:habitat` | **BiomaPage**   | Grid com todos os Pokémons do habitat selecionado.                                                                                     |
+| `/pokemon/:id`    | **PokemonPage** | Página completa: sprite animado, tipos, stats, habilidades, descrição em PT-BR e habitat.                                              |
 
 ---
 
