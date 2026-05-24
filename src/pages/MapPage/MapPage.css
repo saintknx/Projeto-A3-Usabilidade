@@ -1,0 +1,440 @@
+/* ─── LAYOUT GERAL ───────────────────────────────────────────────────────── */
+.map-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* ─── SIDEBAR ────────────────────────────────────────────────────────────── */
+.map-sidebar {
+  width: 320px;
+  min-width: 320px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+}
+
+.sidebar-logo {
+  font-family: var(--pixel);
+  font-size: 10px;
+  color: var(--accent);
+  text-shadow: 0 0 20px rgb(255, 124, 124);
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+
+.sidebar-sub {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* ─── FILTROS DE BIOMA ───────────────────────────────────────────────────── */
+.bioma-filters {
+  padding: 12px 16px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+}
+
+.bioma-chip {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--muted);
+  transition: all 0.15s;
+  font-family: var(--body);
+}
+
+.bioma-chip:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.bioma-chip.active {
+  border-color: var(--bioma-cor, var(--accent));
+  color: var(--bioma-cor, var(--accent));
+  background: var(--surface);
+}
+
+.bioma-chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ─── CONTADOR ───────────────────────────────────────────────────────────── */
+.map-counter {
+  padding: 8px 16px;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+
+.map-counter span {
+  color: var(--accent);
+  font-size: 14px;
+}
+
+/* ─── PAINEL DO POKÉMON ──────────────────────────────────────────────────── */
+.poke-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.poke-panel::-webkit-scrollbar { width: 4px; }
+.poke-panel::-webkit-scrollbar-track { background: var(--surface); }
+.poke-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* Estado vazio */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  gap: 12px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.empty-state span {
+  font-size: 40px;
+}
+
+/* Card de detalhes do Pokémon */
+.poke-detail {
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.poke-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.poke-detail-sprite {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+.poke-detail-number {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.poke-detail-name {
+  font-family: var(--body);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: capitalize;
+  margin-bottom: 6px;
+}
+
+.poke-detail-types {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.lendario-badge {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Bioma */
+.poke-detail-bioma {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.bioma-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Descrição */
+.poke-detail-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 16px;
+  font-style: italic;
+  border-left: 2px solid var(--border);
+  padding-left: 10px;
+}
+
+/* Stats */
+.poke-detail-stats {
+  margin-bottom: 16px;
+}
+
+.stats-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+/* Botão ver mais */
+.btn-ver-mais {
+  width: 100%;
+  padding: 10px;
+  background: var(--surface2);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  color: var(--accent);
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn-ver-mais:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.btn-ver-mais:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ─── ÁREA DO MAPA ───────────────────────────────────────────────────────── */
+.map-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #0a1628;
+  background-image: radial-gradient(ellipse at 50% 50%, #0f2040 0%, #0a1628 70%);
+}
+
+.map-area svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Tooltip do estado */
+.estado-tooltip {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 20;
+  background: rgba(22, 27, 34, 0.95);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  backdrop-filter: blur(8px);
+  animation: slideUp 0.2s ease;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.estado-sigla {
+  font-family: var(--pixel);
+  font-size: 10px;
+  color: var(--accent);
+}
+
+.estado-bioma {
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.estado-habitat {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.estado-btn {
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--surface2);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-align: center;
+}
+
+.estado-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* Legenda */
+.map-legend {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+  background: rgba(22, 27, 34, 0.92);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  backdrop-filter: blur(8px);
+}
+
+.legend-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* Controles de zoom */
+.map-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 16px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.map-btn {
+  width: 36px;
+  height: 36px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.map-btn:hover {
+  background: var(--surface2);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.map-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Marcador de Pokémon */
+.poke-marker {
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.poke-marker:hover,
+.poke-marker:focus {
+  transform: scale(1.3);
+  outline: none;
+}
+
+.poke-marker.selected image {
+  filter: drop-shadow(0 0 6px gold);
+}
+/* Refresh button */
+.refresh-btn {
+  font-size: 1rem;
+}
+.refresh-btn:hover {
+  transform: rotate(180deg);
+  transition: transform 0.4s ease;
+}
+
+/* Inline refresh button next to counter */
+.map-counter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.refresh-inline-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.refresh-inline-btn:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
