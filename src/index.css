@@ -1,4 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;600;700&display=swap');
+
+/* ─── RESET ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── VARIÁVEIS GLOBAIS ──────────────────────────────────────────────────── */
+:root {
+  --bg:       #0d1117;
+  --surface:  #161b22;
+  --surface2: #21262d;
+  --border:   #30363d;
+  --accent:   #ff4747;
+  --text:     #e6edf3;
+  --muted:    #8b949e;
+  --hp-good:  #56C363;
+  --hp-mid:   #FFD700;
+  --hp-low:   #FF6B6B;
+  --pixel:    'Press Start 2P', monospace;
+  --body:     'Rajdhani', sans-serif;
+}
+
+/* ─── BASE ───────────────────────────────────────────────────────────────── */
 body {
   background: var(--bg);
   color: var(--text);
+  font-family: var(--body);
+  min-height: 100vh;
+}
+
+/* ─── FOCO VISÍVEL (acessibilidade) ─────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ─── REDUÇÃO DE MOVIMENTO (acessibilidade) ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
