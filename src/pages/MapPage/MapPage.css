@@ -438,3 +438,53 @@
   background: rgba(255,255,255,0.15);
   color: #fff;
 }
+
+/* ─── INSERÇÃO DA BARRA DE PESQUISA (SEM TOCAR NO RESTANTE) ─────────────── */
+.search-box-container {
+  display: flex;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 13px;
+  transition: border-color 0.15s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.search-btn {
+  padding: 8px 14px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.search-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+
+.search-error-msg {
+  color: var(--hp-low);
+  font-size: 12px;
+  margin-top: 6px;
+  font-weight: 600;
+}

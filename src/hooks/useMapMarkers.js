@@ -1,94 +1,126 @@
-import { useState, useEffect, useCallback} from "react";
-import { gerarMarcadoresFromAPI } from "../data/markers";
+import { useState, useEffect, useCallback } from "react";
+import { BIOMAS_INFO, ESTADOS_BIOMA } from "../data/biomas";
 
 /**
- * Hook que busca os habitats da PokéAPI e gera marcadores garantidamente
- * consistentes com os dados reais da API.
- *
- * Os marcadores do mapa são sempre um subconjunto do que a API retorna
- * para cada habitat — sem hardcoding de listas.
+ * Hook para buscar pokémons da PokéAPI com base nos habitats dos biomas
+ * e gerar marcadores com coordenadas geográficas reais [Long, Lat].
+ * Agora com sistema de balanceamento regional para preencher o Norte e aliviar o Sul.
  */
+export function useMapMarkers() {
+  const [markers, setMarkers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const HABITATS = ["forest", "grassland", "cave", "rare", "waters-edge", "urban", "mountain", "rough-terrain"];
-
-// ID de cada habitat na PokéAPI
-const HABITAT_IDS = {
-  cave:           1,
-  forest:         2,
-  grassland:      3,
-  mountain:       4,
-  rare:           5,
-  "rough-terrain":6,
-  sea:            7,
-  urban:          8,
-  "waters-edge":  9,
-};
-
-// Cache em memória para não refazer fetch a cada atualização
-let _poolCache = null;
-// Persiste os markers entre desmontagens/remontagens do componente (navegação)
-let _markersCache = null;
-
-async function fetchAllPools() {
-  if (_poolCache) return _poolCache;
-
-  const results = await Promise.all(
-    HABITATS.map(async (habitat) => {
-      const id = HABITAT_IDS[habitat];
-      if (!id) return [habitat, []];
-      try {
-        const res  = await fetch(`https://pokeapi.co/api/v2/pokemon-habitat/${id}`);
-        if (!res.ok) return [habitat, []];
-        const json = await res.json();
-        const pokemons = json.pokemon_species.map((p) => ({
-          name: p.name,
-          id:   parseInt(p.url.split("/").filter(Boolean).pop()),
-        }));
-        return [habitat, pokemons];
-      } catch {
-        return [habitat, []];
-      }
-    })
-  );
-
-  _poolCache = Object.fromEntries(results);
-  return _poolCache;
-}
-
-export function useMapMarkers(countPerBioma = 8) {
-  const [markers, setMarkers]     = useState(() => _markersCache || []);
-  const [loading, setLoading]     = useState(!_markersCache);
-  const [error, setError]         = useState(null);
-
-  const generateMarkers = useCallback(async () => {
+  const loadMarkers = useCallback(async () => {
     setLoading(true);
     setError(null);
+
     try {
-      const pools = await fetchAllPools();
-      const m = gerarMarcadoresFromAPI(pools, countPerBioma);
-      _markersCache = m;
-      setMarkers(m);
+      const allGeneratedMarkers = [];
+
+      // Mapeia quais estados pertencem a cada habitat para fazer o spawn correto
+      const habitatParaEstados = {};
+      Object.entries(ESTADOS_BIOMA).forEach(([sigla, info]) => {
+        if (!habitatParaEstados[info.habitat]) {
+          habitatParaEstados[info.habitat] = [];
+        }
+        habitatParaEstados[info.habitat].push({ sigla, ...info });
+      });
+
+      // Busca os Pokémons para cada bioma definido
+      for (const bioma of BIOMAS_INFO) {
+        const response = await fetch(
+          `https://pokeapi.co/api/v2/pokemon-habitat/${bioma.habitat}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`Erro ao buscar habitat: ${bioma.habitat}`);
+        }
+
+        const data = await response.json();
+        const pokemonSpeciesList = data.pokemon_species || [];
+
+        if (pokemonSpeciesList.length === 0) continue;
+
+        // --- SISTEMA DE CONTROLE DE DENSIDADE (BALANCEAMENTO) ---
+        // Definimos dinamicamente quantos Pokémons vão nascer dependendo do habitat
+        let quantidadeSorteada = 6; 
+
+        if (bioma.habitat === "forest") {
+          // Aumenta drasticamente a população do Norte (Amazônia) para preencher o topo
+          quantidadeSorteada = 22; 
+        } else if (bioma.habitat === "grassland") {
+          // Cerrado é grande, ganha um leve bônus no centro-norte
+          quantidadeSorteada = 10;
+        } else if (bioma.habitat === "rough-terrain" || bioma.habitat === "mountain" || bioma.habitat === "rare") {
+          // Diminui os habitats do Sul, Sudeste e Nordeste para aliviar a superpopulação da parte de baixo
+          quantidadeSorteada = 4; 
+        }
+
+        // Sorteia a quantidade ajustada de pokémons deste habitat
+        const shuffled = [...pokemonSpeciesList].sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, quantidadeSorteada);
+
+        const estadosDisponiveis = habitatParaEstados[bioma.habitat] || [];
+
+        selected.forEach((specie) => {
+          // Extrai o ID a partir da URL da espécie
+          const urlParts = specie.url.split("/");
+          const id = parseInt(urlParts[urlParts.length - 2], 10);
+
+          if (estadosDisponiveis.length > 0) {
+            // Sorteia um estado pertencente a esse bioma para o Pokémon dar spawn
+            const estadoSorteado =
+              estadosDisponiveis[Math.floor(Math.random() * estadosDisponiveis.length)];
+
+            // Pega a coordenada central real [Longitude, Latitude] do estado
+            const [baseLong, baseLat] = estadoSorteado.coords;
+
+            // --- SISTEMA DE ESPALHAMENTO (JITTER) ESPACIAL ---
+            let fatorEspalhamento = 1.6;
+
+            // Se for nos estados gigantes do Norte, espalha ainda mais para ocupar o continente vazio
+            if (estadoSorteado.sigla === "AM" || estadoSorteado.sigla === "PA") {
+              fatorEspalhamento = 5.0; // Espalha por toda a imensidão da selva
+            } else if (estadoSorteado.sigla === "MS" || estadoSorteado.sigla === "RS") {
+              fatorEspalhamento = 3.5; // Mantém um bom espalhamento nas pontas isoladas
+            } else if (estadoSorteado.sigla === "AC" || estadoSorteado.sigla === "RO" || estadoSorteado.sigla === "RR") {
+              fatorEspalhamento = 2.5;
+            }
+
+            const jitterLong = (Math.random() - 0.5) * fatorEspalhamento;
+            const jitterLat = (Math.random() - 0.5) * fatorEspalhamento;
+
+            allGeneratedMarkers.push({
+              id,
+              name: specie.name.charAt(0).toUpperCase() + specie.name.slice(1),
+              habitat: bioma.habitat,
+              bioma: bioma.bioma,
+              estado: estadoSorteado.sigla,
+              coords: [baseLong + jitterLong, baseLat + jitterLat],
+            });
+          }
+        });
+      }
+
+      // Sorteia a ordem final dos marcadores para misturar a renderização na tela
+      setMarkers(allGeneratedMarkers.sort(() => 0.5 - Math.random()));
     } catch (err) {
-      setError(err.message);
+      console.error("Erro no useMapMarkers:", err);
+      setError(err.message || "Erro desconhecido ao carregar marcadores.");
     } finally {
       setLoading(false);
     }
-  }, [countPerBioma]);
+  }, []);
 
   useEffect(() => {
-    // Só busca se ainda não há markers em cache
-    if (!_markersCache) generateMarkers();
-  }, [generateMarkers]);
+    loadMarkers();
+  }, [loadMarkers]);
 
-  const refresh = useCallback(() => {
-    if (_poolCache) {
-      const m = gerarMarcadoresFromAPI(_poolCache, countPerBioma);
-      _markersCache = m;
-      setMarkers(m);
-    } else {
-      generateMarkers();
-    }
-  }, [countPerBioma, generateMarkers]);
-
-  return { markers, loading: loading && markers.length === 0, error, refresh };
+  return {
+    markers,
+    loading,
+    error,
+    refresh: loadMarkers,
+  };
 }
