@@ -21,7 +21,12 @@ function BiomaPokeCard({ id, name }) {
     <article
       className="bioma-poke-card"
       onClick={() => navigate(`/pokemon/${id}`)}
-      onKeyDown={(e) => e.key === "Enter" && navigate(`/pokemon/${id}`)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          navigate(`/pokemon/${id}`);
+        }
+      }}
       tabIndex={0}
       role="button"
       aria-label={`Ver detalhes de ${name}, número ${numero}`}

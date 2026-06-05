@@ -321,7 +321,12 @@ export default function MapPage() {
                       tabIndex={0}
                       role="button"
                       aria-label={`${sigla} — ${bioma?.bioma || "região"}`}
-                      onKeyDown={(e) => e.key === "Enter" && bioma && navigate(`/bioma/${bioma.habitat}`)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          bioma && navigate(`/bioma/${bioma.habitat}`);
+                        }
+                      }}
                     />
                   );
                 })
@@ -334,7 +339,12 @@ export default function MapPage() {
                 <g
                   className={`poke-marker ${selectedMarker?.id === marker.id && selectedMarker?.coords?.[0] === marker.coords[0] ? "selected" : ""}`}
                   onClick={() => setSelectedMarker(marker)}
-                  onKeyDown={(e) => e.key === "Enter" && setSelectedMarker(marker)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setSelectedMarker(marker);
+                    }
+                  }}
                   tabIndex={0}
                   role="button"
                   aria-label={`Pokémon ${marker.name} — clique para ver detalhes`}
