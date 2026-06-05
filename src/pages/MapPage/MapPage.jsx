@@ -313,8 +313,10 @@ export default function MapPage() {
                       style={{
                         default: { outline: "none" },
                         hover:   { outline: "none" },
-                        pressed: { outline: "none" },
+                        pressed: { outline: "none", fill: bioma?.corHover || "#444" },
                       }}
+                      onFocus={() => setHoveredEstado(sigla)}
+                      onBlur={() => setHoveredEstado(null)}
                       onMouseEnter={() => setHoveredEstado(sigla)}
                       onMouseLeave={() => setHoveredEstado(null)}
                       onClick={() => bioma && navigate(`/bioma/${bioma.habitat}`)}
